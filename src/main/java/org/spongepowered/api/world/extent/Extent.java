@@ -460,4 +460,6 @@ public interface Extent extends EntityUniverse, TileEntityVolume, InteractableVo
      * @param uuid The {@link UUID} to set as notifier
      */
     void setNotifier(int x, int y, int z, @Nullable UUID uuid);
+    
+    ArchetypeVolume createArchetypeVolume(Vector3i min, Vector3i max);
 }
