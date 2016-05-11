@@ -22,35 +22,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.spongepowered.api.world.extent;
+package org.spongepowered.api.world.schematic;
 
-import com.flowpowered.math.vector.Vector3i;
-import org.spongepowered.api.block.tileentity.TileEntityArchetype;
-import org.spongepowered.api.entity.EntityArchetype;
-import org.spongepowered.api.event.cause.Cause;
-import org.spongepowered.api.world.Location;
-import org.spongepowered.api.world.World;
-import org.spongepowered.api.world.extent.worker.MutableBlockVolumeWorker;
+import org.spongepowered.api.CatalogType;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
+public interface PaletteType extends CatalogType {
 
-public interface ArchetypeVolume extends MutableBlockVolume {
-
-    void apply(Location<World> location, Cause cause);
-
-    Optional<TileEntityArchetype> getBlockArchetype(int x, int y, int z);
-
-    default Optional<TileEntityArchetype> getBlockArchetype(Vector3i position) {
-        return getBlockArchetype(position.getX(), position.getY(), position.getZ());
-    }
-
-    Map<Vector3i, TileEntityArchetype> getBlockArchetypes();
-
-    Collection<EntityArchetype> getEntityArchetypes();
-
-    @Override
-    MutableBlockVolumeWorker<? extends ArchetypeVolume> getBlockWorker();
+    Palette create();
 
 }

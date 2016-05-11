@@ -53,10 +53,10 @@ public interface DataTranslator<T> extends CatalogType {
      * {@link DataView}.
      *
      * @param view The data view to translate the object from
-     * @return The object, deserialized, if available
+     * @return The deserialized object
      * @throws InvalidDataException If the dataview contained invalid data
      */
-    Optional<T> translate(DataView view) throws InvalidDataException;
+    T translate(DataView view) throws InvalidDataException;
 
     /**
      * Serializes the provided object to a {@link DataContainer}.

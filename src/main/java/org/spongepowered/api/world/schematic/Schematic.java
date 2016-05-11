@@ -26,8 +26,16 @@ package org.spongepowered.api.world.schematic;
 
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.world.extent.ArchetypeVolume;
+import org.spongepowered.api.world.extent.worker.MutableBlockVolumeWorker;
 
 public interface Schematic extends ArchetypeVolume {
+    
+    // TODO add some sort of persistence setting for whether entities are stored
+
+    Palette getPalette();
 
     DataContainer getMetadata();
+
+    @Override
+    MutableBlockVolumeWorker<Schematic> getBlockWorker();
 }

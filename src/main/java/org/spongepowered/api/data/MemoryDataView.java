@@ -784,7 +784,7 @@ public class MemoryDataView implements DataView {
     public <T> Optional<T> getObject(DataQuery path, Class<T> objectClass) {
         return getView(path).flatMap(view ->
                 Sponge.getDataManager().getTranslator(objectClass)
-                        .flatMap(serializer -> serializer.translate(view))
+                        .flatMap(serializer -> Optional.of(serializer.translate(view)))
         );
     }
 
@@ -794,8 +794,6 @@ public class MemoryDataView implements DataView {
                 Sponge.getDataManager().getTranslator(objectClass).map(serializer ->
                         viewList.stream()
                                 .map(serializer::translate)
-                                .filter(Optional::isPresent)
-                                .map(Optional::get)
                                 .collect(Collectors.toList())
                 )
         );

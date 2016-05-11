@@ -22,35 +22,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.spongepowered.api.world.extent;
+package org.spongepowered.api.world.schematic;
 
-import com.flowpowered.math.vector.Vector3i;
-import org.spongepowered.api.block.tileentity.TileEntityArchetype;
-import org.spongepowered.api.entity.EntityArchetype;
-import org.spongepowered.api.event.cause.Cause;
-import org.spongepowered.api.world.Location;
-import org.spongepowered.api.world.World;
-import org.spongepowered.api.world.extent.worker.MutableBlockVolumeWorker;
+import org.spongepowered.api.block.BlockState;
 
-import java.util.Collection;
-import java.util.Map;
 import java.util.Optional;
 
-public interface ArchetypeVolume extends MutableBlockVolume {
+public interface Palette {
 
-    void apply(Location<World> location, Cause cause);
+    int getHighestId();
 
-    Optional<TileEntityArchetype> getBlockArchetype(int x, int y, int z);
+    Optional<Integer> get(BlockState state);
 
-    default Optional<TileEntityArchetype> getBlockArchetype(Vector3i position) {
-        return getBlockArchetype(position.getX(), position.getY(), position.getZ());
-    }
+    int getOrAssign(BlockState state);
 
-    Map<Vector3i, TileEntityArchetype> getBlockArchetypes();
+    Optional<BlockState> get(int id);
 
-    Collection<EntityArchetype> getEntityArchetypes();
-
-    @Override
-    MutableBlockVolumeWorker<? extends ArchetypeVolume> getBlockWorker();
+    boolean remove(BlockState state);
 
 }
