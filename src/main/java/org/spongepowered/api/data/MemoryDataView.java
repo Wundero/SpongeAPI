@@ -142,18 +142,17 @@ public class MemoryDataView implements DataView {
         if (queryParts.size() == 1) {
             String key = queryParts.get(0).getParts().get(0);
             return this.map.containsKey(key);
-        } else {
-            DataQuery subQuery = queryParts.get(0);
-            Optional<DataView> subViewOptional = this.getUnsafeView(subQuery);
-            if (!subViewOptional.isPresent()) {
-                return false;
-            }
-            List<String> subParts = Lists.newArrayListWithCapacity(queryParts.size() - 1);
-            for (int i = 1; i < queryParts.size(); i++) {
-                subParts.add(queryParts.get(i).asString("."));
-            }
-            return subViewOptional.get().contains(of(subParts));
         }
+        DataQuery subQuery = queryParts.get(0);
+        Optional<DataView> subViewOptional = this.getUnsafeView(subQuery);
+        if (!subViewOptional.isPresent()) {
+            return false;
+        }
+        List<String> subParts = Lists.newArrayListWithCapacity(queryParts.size() - 1);
+        for (int i = 1; i < queryParts.size(); i++) {
+            subParts.add(queryParts.get(i).asString("."));
+        }
+        return subViewOptional.get().contains(of(subParts));
     }
 
     @Override
@@ -189,40 +188,38 @@ public class MemoryDataView implements DataView {
 
         if (sz == 1) {
             String key = queryParts.get(0).getParts().get(0);
-            if (this.map.containsKey(key)) {
-                final Object object = this.map.get(key);
-                if (object.getClass().isArray()) {
-                    if (object instanceof byte[]) {
-                        return Optional.<Object>of(ArrayUtils.clone((byte[]) object));
-                    } else if (object instanceof short[]) {
-                        return Optional.<Object>of(ArrayUtils.clone((short[]) object));
-                    } else if (object instanceof int[]) {
-                        return Optional.<Object>of(ArrayUtils.clone((int[]) object));
-                    } else if (object instanceof long[]) {
-                        return Optional.<Object>of(ArrayUtils.clone((long[]) object));
-                    } else if (object instanceof float[]) {
-                        return Optional.<Object>of(ArrayUtils.clone((float[]) object));
-                    } else if (object instanceof double[]) {
-                        return Optional.<Object>of(ArrayUtils.clone((double[]) object));
-                    } else if (object instanceof boolean[]) {
-                        return Optional.<Object>of(ArrayUtils.clone((boolean[]) object));
-                    } else {
-                        return Optional.<Object>of(ArrayUtils.clone((Object[]) object));
-                    }
-                }
-                return Optional.of(this.map.get(key));
-            } else {
+            final Object object = this.map.get(key);
+            if (object == null) {
                 return Optional.empty();
             }
+            if (object.getClass().isArray()) {
+                if (object instanceof byte[]) {
+                    return Optional.<Object>of(ArrayUtils.clone((byte[]) object));
+                } else if (object instanceof short[]) {
+                    return Optional.<Object>of(ArrayUtils.clone((short[]) object));
+                } else if (object instanceof int[]) {
+                    return Optional.<Object>of(ArrayUtils.clone((int[]) object));
+                } else if (object instanceof long[]) {
+                    return Optional.<Object>of(ArrayUtils.clone((long[]) object));
+                } else if (object instanceof float[]) {
+                    return Optional.<Object>of(ArrayUtils.clone((float[]) object));
+                } else if (object instanceof double[]) {
+                    return Optional.<Object>of(ArrayUtils.clone((double[]) object));
+                } else if (object instanceof boolean[]) {
+                    return Optional.<Object>of(ArrayUtils.clone((boolean[]) object));
+                } else {
+                    return Optional.<Object>of(ArrayUtils.clone((Object[]) object));
+                }
+            }
+            return Optional.of(object);
         }
         DataQuery subQuery = queryParts.get(0);
         Optional<DataView> subViewOptional = this.getUnsafeView(subQuery);
-        DataView subView;
         if (!subViewOptional.isPresent()) {
             return Optional.empty();
-        } else {
-            subView = subViewOptional.get();
         }
+        DataView subView = subViewOptional.get();
+
         List<String> subParts = Lists.newArrayListWithCapacity(queryParts.size() - 1);
         for (int i = 1; i < queryParts.size(); i++) {
             subParts.add(queryParts.get(i).asString("."));
@@ -414,12 +411,11 @@ public class MemoryDataView implements DataView {
             String subKey = parts.get(0);
             DataQuery subQuery = of(subKey);
             Optional<DataView> subViewOptional = this.getUnsafeView(subQuery);
-            DataView subView;
             if (!subViewOptional.isPresent()) {
                 return this;
-            } else {
-                subView = subViewOptional.get();
             }
+            DataView subView = subViewOptional.get();
+            
             List<String> subParts = Lists.newArrayListWithCapacity(parts.size() - 1);
             for (int i = 1; i < parts.size(); i++) {
                 subParts.add(parts.get(i));
@@ -445,20 +441,18 @@ public class MemoryDataView implements DataView {
             DataView result = new MemoryDataView(this, key);
             this.map.put(key.getParts().get(0), result);
             return result;
-        } else {
-            List<String> subParts = Lists
-                    .newArrayListWithCapacity(queryParts.size() - 1);
-            for (int i = 1; i < sz; i++) {
-                subParts.add(queryParts.get(i).asString('.'));
-            }
-            DataQuery subQuery = of(subParts);
-            DataView subView = (DataView) this.map.get(queryParts.get(0).asString('.'));
-            if (subView == null) {
-                subView = new MemoryDataView(this.parent, queryParts.get(0));
-                this.map.put(queryParts.get(0).asString('.'), subView);
-            }
-            return subView.createView(subQuery);
         }
+        List<String> subParts = Lists.newArrayListWithCapacity(queryParts.size() - 1);
+        for (int i = 1; i < sz; i++) {
+            subParts.add(queryParts.get(i).asString('.'));
+        }
+        DataQuery subQuery = of(subParts);
+        DataView subView = (DataView) this.map.get(queryParts.get(0).asString('.'));
+        if (subView == null) {
+            subView = new MemoryDataView(this.parent, queryParts.get(0));
+            this.map.put(queryParts.get(0).asString('.'), subView);
+        }
+        return subView.createView(subQuery);
     }
 
     @Override
@@ -599,9 +593,8 @@ public class MemoryDataView implements DataView {
                 .map(obj -> {
                     if (obj instanceof List<?>) {
                         return (List<?>) obj;
-                    } else {
-                        return Arrays.asList((Object[]) obj);
                     }
+                    return Arrays.asList((Object[]) obj);
                 }
         );
     }

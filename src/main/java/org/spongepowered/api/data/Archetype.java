@@ -35,8 +35,21 @@ import org.spongepowered.api.world.World;
  */
 public interface Archetype<S extends LocatableSnapshot<S>> extends DataHolder {
 
+    /**
+     * Creates a new instance based on this archetype at the given location.
+     * 
+     * @param location The location to create the new instance at
+     * @param cause The cause of the creation
+     * @return Whether the creation was successful
+     */
     boolean apply(Location<World> location, Cause cause);
 
+    /**
+     * Creates a new immutable snapshot based on this archetype.
+     * 
+     * @param location The location for the snapshot to be specified as at
+     * @return The snapshot
+     */
     S toSnapshot(Location<World> location);
 
 }

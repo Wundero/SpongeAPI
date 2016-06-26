@@ -462,5 +462,5 @@ public interface Extent extends EntityUniverse, TileEntityVolume, InteractableVo
      */
     void setNotifier(int x, int y, int z, @Nullable UUID uuid);
     
-    ArchetypeVolume createArchetypeVolume(Vector3i min, Vector3i max, Vector3i origin, PaletteType paletteType);
+    ArchetypeVolume createArchetypeVolume(Vector3i min, Vector3i max, Vector3i origin, PaletteType paletteType, boolean storeEntities);
 }
