@@ -24,13 +24,18 @@
  */
 package org.spongepowered.api.world.schematic;
 
+import com.flowpowered.math.vector.Vector3i;
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.util.ResettableBuilder;
 import org.spongepowered.api.world.extent.ArchetypeVolume;
 import org.spongepowered.api.world.extent.worker.MutableBlockVolumeWorker;
 
 public interface Schematic extends ArchetypeVolume {
     
-    // TODO add some sort of persistence setting for whether entities are stored
+    public static Builder builder() {
+        return Sponge.getRegistry().createBuilder(Builder.class);
+    }
 
     Palette getPalette();
 
@@ -38,4 +43,18 @@ public interface Schematic extends ArchetypeVolume {
 
     @Override
     MutableBlockVolumeWorker<Schematic> getBlockWorker();
+    
+    public static interface Builder extends ResettableBuilder<Schematic, Builder> {
+        
+        Builder volume(ArchetypeVolume colume);
+        
+        Builder palette(Palette palette);
+        
+        Builder paletteType(PaletteType type);
+        
+        Builder origin(Vector3i origin);
+        
+        Builder storeEntities(boolean state);
+        
+    }
 }

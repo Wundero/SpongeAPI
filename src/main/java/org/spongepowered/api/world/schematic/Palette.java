@@ -29,6 +29,8 @@ import org.spongepowered.api.block.BlockState;
 import java.util.Optional;
 
 public interface Palette {
+    
+    PaletteType getType();
 
     int getHighestId();
 
