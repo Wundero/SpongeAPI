@@ -29,6 +29,7 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.util.ResettableBuilder;
 import org.spongepowered.api.world.extent.ArchetypeVolume;
+import org.spongepowered.api.world.extent.Extent;
 import org.spongepowered.api.world.extent.worker.MutableBlockVolumeWorker;
 
 public interface Schematic extends ArchetypeVolume {
@@ -46,15 +47,17 @@ public interface Schematic extends ArchetypeVolume {
     
     public static interface Builder extends ResettableBuilder<Schematic, Builder> {
         
-        Builder volume(ArchetypeVolume colume);
+        Builder volume(ArchetypeVolume volume);
+        Builder volume(Extent volume);
         
         Builder palette(Palette palette);
-        
         Builder paletteType(PaletteType type);
         
         Builder origin(Vector3i origin);
         
         Builder storeEntities(boolean state);
+        
+        Schematic build() throws IllegalArgumentException;
         
     }
 }
