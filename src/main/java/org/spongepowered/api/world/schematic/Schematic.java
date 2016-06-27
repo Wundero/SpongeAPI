@@ -38,6 +38,11 @@ import org.spongepowered.api.world.extent.worker.MutableBlockVolumeWorker;
  */
 public interface Schematic extends ArchetypeVolume {
 
+    public static final String METADATA_NAME = "Name";
+    public static final String METADATA_AUTHOR = "Author";
+    public static final String METADATA_DATE = "Date";
+    public static final String METADATA_REQUIRED_MODS = "RequiredMods";
+
     /**
      * Gets a new builder for schematics.
      * 
@@ -125,6 +130,10 @@ public interface Schematic extends ArchetypeVolume {
          * @return This builder, for chaining
          */
         Builder storeEntities(boolean state);
+
+        Builder metadata(DataContainer metadata);
+
+        Builder metaValue(String key, Object value);
 
         /**
          * Constructs a new {@link Schematic} from this builder.
