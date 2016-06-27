@@ -192,6 +192,24 @@ public final class DataQuery {
     }
 
     /**
+     * Returns a {@link DataQuery} where the first node is "popped" off. If this
+     * query is already the top level query, then the {@link DataQuery#of()} is
+     * returned.
+     *
+     * @return The next level query
+     */
+    public DataQuery popFirst() {
+        if (this.parts.size() <= 1) {
+            return of();
+        }
+        ImmutableList.Builder<String> builder = ImmutableList.builder();
+        for (int i = 1; i < this.parts.size(); i++) {
+            builder.add(this.parts.get(i));
+        }
+        return new DataQuery(builder.build());
+    }
+
+    /**
      * Gets the last entry of this {@link DataQuery}. If this query is
      * a single entry query or an empty query, it returns itself.
      *
