@@ -26,8 +26,16 @@ package org.spongepowered.api.world.schematic;
 
 import org.spongepowered.api.CatalogType;
 
+/**
+ * Represents a type of palette.
+ */
 public interface PaletteType extends CatalogType {
 
+    /**
+     * Gets an instance of this palette type.
+     * 
+     * @return The palette instance
+     */
     Palette create();
 
 }

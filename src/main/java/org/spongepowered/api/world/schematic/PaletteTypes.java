@@ -28,7 +28,13 @@ import org.spongepowered.api.util.generator.dummy.DummyObjectProvider;
 
 public class PaletteTypes {
 
+    /**
+     * The global palette containing a mapping of all blockstates to ids.
+     */
     public static final PaletteType GLOBAL = DummyObjectProvider.createFor(PaletteType.class, "GLOBAL");
+    /**
+     * A local palette containing only a subset of the global palette.
+     */
     public static final PaletteType LOCAL = DummyObjectProvider.createFor(PaletteType.class, "LOCAL");
     
     private PaletteTypes() {
