@@ -26,7 +26,7 @@ package org.spongepowered.api.world.schematic;
 
 import com.flowpowered.math.vector.Vector3i;
 import org.spongepowered.api.Sponge;
-import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.util.ResettableBuilder;
 import org.spongepowered.api.world.extent.ArchetypeVolume;
 import org.spongepowered.api.world.extent.Extent;
@@ -64,7 +64,7 @@ public interface Schematic extends ArchetypeVolume {
      * 
      * @return The additional metadata
      */
-    DataContainer getMetadata();
+    DataView getMetadata();
 
     @Override
     MutableBlockVolumeWorker<Schematic> getBlockWorker();
@@ -131,8 +131,22 @@ public interface Schematic extends ArchetypeVolume {
          */
         Builder storeEntities(boolean state);
 
-        Builder metadata(DataContainer metadata);
+        /**
+         * Specifies the metadata container.
+         * 
+         * @param metadata The metadata container
+         * @return This builder, for chaining
+         */
+        Builder metadata(DataView metadata);
 
+        /**
+         * Specifies a metadata value which will be included in the metadata of
+         * the schematic.
+         * 
+         * @param key The metadata key
+         * @param value The value
+         * @return This builder, for chaining
+         */
         Builder metaValue(String key, Object value);
 
         /**
