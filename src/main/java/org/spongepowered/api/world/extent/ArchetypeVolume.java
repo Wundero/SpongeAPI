@@ -37,7 +37,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface ArchetypeVolume extends MutableBlockVolume {
-
+    
     void apply(Location<World> location, Cause cause);
 
     Optional<TileEntityArchetype> getBlockArchetype(int x, int y, int z);

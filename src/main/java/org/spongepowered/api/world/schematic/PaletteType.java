@@ -25,10 +25,12 @@
 package org.spongepowered.api.world.schematic;
 
 import org.spongepowered.api.CatalogType;
+import org.spongepowered.api.util.annotation.CatalogedBy;
 
 /**
  * Represents a type of palette.
  */
+@CatalogedBy(PaletteTypes.class)
 public interface PaletteType extends CatalogType {
 
     /**
