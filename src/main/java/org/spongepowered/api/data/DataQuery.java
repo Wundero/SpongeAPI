@@ -157,6 +157,23 @@ public final class DataQuery {
     }
 
     /**
+     * Returns a new query that is made up of this query's parts followed by the
+     * given query.
+     *
+     * @param that The given query to follow this one
+     * @return The constructed query
+     */
+    public DataQuery then(String that) {
+        ImmutableList.Builder<String> builder =
+            new ImmutableList.Builder<>();
+
+        builder.addAll(this.parts);
+        builder.add(that);
+
+        return new DataQuery(builder.build());
+    }
+
+    /**
      * Returns the parts of this query as individual queries. The returned list
      * is immutable.
      *

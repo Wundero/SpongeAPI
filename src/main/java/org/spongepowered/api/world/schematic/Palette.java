@@ -26,6 +26,7 @@ package org.spongepowered.api.world.schematic;
 
 import org.spongepowered.api.block.BlockState;
 
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -81,5 +82,7 @@ public interface Palette {
      * @return If the blockstate existed in the mapping
      */
     boolean remove(BlockState state);
+
+    Collection<BlockState> getEntries();
 
 }
