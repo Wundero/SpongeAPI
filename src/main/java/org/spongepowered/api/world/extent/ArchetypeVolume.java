@@ -24,6 +24,7 @@
  */
 package org.spongepowered.api.world.extent;
 
+import com.flowpowered.math.vector.Vector3f;
 import com.flowpowered.math.vector.Vector3i;
 import org.spongepowered.api.block.tileentity.TileEntityArchetype;
 import org.spongepowered.api.entity.EntityArchetype;
@@ -32,23 +33,61 @@ import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 import org.spongepowered.api.world.extent.worker.MutableBlockVolumeWorker;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * A copy of a region taken from another extent.
+ */
 public interface ArchetypeVolume extends MutableBlockVolume {
-    
+
+    /**
+     * Applies this archetype at the given location. The archetype will be
+     * mapped onto the given world such that the origin on the archetype lines
+     * up with the given position.
+     * 
+     * @param location The location to apply at
+     * @param cause The cause of the changes
+     */
     void apply(Location<World> location, Cause cause);
 
+    /**
+     * Gets the {@link TileEntityArchetype} for the tile entity carrying block
+     * at the given coordinates.
+     * 
+     * @param x The X position
+     * @param y The Y position
+     * @param z The Z position
+     * @return The tile entity, if found
+     */
     Optional<TileEntityArchetype> getBlockArchetype(int x, int y, int z);
 
+    /**
+     * Gets the {@link TileEntityArchetype} for the tile entity carrying block
+     * at the given coordinates.
+     * 
+     * @param position The position
+     * @return The tile entity, if found
+     */
     default Optional<TileEntityArchetype> getBlockArchetype(Vector3i position) {
         return getBlockArchetype(position.getX(), position.getY(), position.getZ());
     }
 
+    /**
+     * Gets a map containing all tile entitiy archetypes within this volume,
+     * keyed by their positions within the volume.
+     * 
+     * @return The tile entity map
+     */
     Map<Vector3i, TileEntityArchetype> getBlockArchetypes();
 
-    Collection<EntityArchetype> getEntityArchetypes();
+    /**
+     * Gets a map of all {@link EntityArchetype}s within this volume, keyed by
+     * their positions.
+     * 
+     * @return The entity map
+     */
+    Map<Vector3f, EntityArchetype> getEntityArchetypes();
 
     @Override
     MutableBlockVolumeWorker<? extends ArchetypeVolume> getBlockWorker();

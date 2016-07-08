@@ -40,7 +40,6 @@ import org.spongepowered.api.world.BlockChangeFlag;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.extent.worker.MutableBiomeAreaWorker;
 import org.spongepowered.api.world.extent.worker.MutableBlockVolumeWorker;
-import org.spongepowered.api.world.schematic.PaletteType;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -461,6 +460,17 @@ public interface Extent extends EntityUniverse, TileEntityVolume, InteractableVo
      * @param uuid The {@link UUID} to set as notifier
      */
     void setNotifier(int x, int y, int z, @Nullable UUID uuid);
-    
+
+    /**
+     * Creates a new archetype volume from the specified section of this extent.
+     * The archetype's volume will be shifted such that the position given in
+     * the origin will be the origin of the volume.
+     * 
+     * @param min The minimum point of the area to copy
+     * @param max The maximum point of the area to copy
+     * @param origin The eventual origin on the new archetype volume
+     * @return The archetype volume
+     */
     ArchetypeVolume createArchetypeVolume(Vector3i min, Vector3i max, Vector3i origin);
+
 }
