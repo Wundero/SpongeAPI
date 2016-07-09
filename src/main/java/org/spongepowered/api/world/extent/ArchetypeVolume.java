@@ -60,7 +60,7 @@ public interface ArchetypeVolume extends MutableBlockVolume {
      * @param z The Z position
      * @return The tile entity, if found
      */
-    Optional<TileEntityArchetype> getBlockArchetype(int x, int y, int z);
+    Optional<TileEntityArchetype> getTileEntityArchetype(int x, int y, int z);
 
     /**
      * Gets the {@link TileEntityArchetype} for the tile entity carrying block
@@ -69,8 +69,8 @@ public interface ArchetypeVolume extends MutableBlockVolume {
      * @param position The position
      * @return The tile entity, if found
      */
-    default Optional<TileEntityArchetype> getBlockArchetype(Vector3i position) {
-        return getBlockArchetype(position.getX(), position.getY(), position.getZ());
+    default Optional<TileEntityArchetype> getTileEntityArchetype(Vector3i position) {
+        return getTileEntityArchetype(position.getX(), position.getY(), position.getZ());
     }
 
     /**
@@ -79,7 +79,7 @@ public interface ArchetypeVolume extends MutableBlockVolume {
      * 
      * @return The tile entity map
      */
-    Map<Vector3i, TileEntityArchetype> getBlockArchetypes();
+    Map<Vector3i, TileEntityArchetype> getTileEntityArchetypes();
 
     /**
      * Gets a map of all {@link EntityArchetype}s within this volume, keyed by
