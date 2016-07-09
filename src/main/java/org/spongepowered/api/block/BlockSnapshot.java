@@ -144,10 +144,13 @@ public interface BlockSnapshot extends LocatableSnapshot<BlockSnapshot> {
     /**
      * Creates a new {@link TileEntityArchetype} for use with {@link Schematic}s
      * and placing the archetype in multiple locations.
+     * 
+     * <p>If this blocksnapshot does not contain a tile entity then this will
+     * return {@link Optional#empty()}.</p>
      *
      * @return The created archetype for re-creating this tile entity
      */
-    TileEntityArchetype createArchetype();
+    Optional<TileEntityArchetype> createArchetype();
 
     interface Builder extends ImmutableDataBuilder<BlockSnapshot, Builder> {
 

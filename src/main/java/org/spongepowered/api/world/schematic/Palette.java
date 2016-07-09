@@ -83,6 +83,11 @@ public interface Palette {
      */
     boolean remove(BlockState state);
 
+    /**
+     * Gets all {@link BlockState}s contained in this palette.
+     * 
+     * @return All contained block states
+     */
     Collection<BlockState> getEntries();
 
 }
